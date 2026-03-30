@@ -122,6 +122,7 @@ Once the bot is running, you can interact with it through Telegram using the fol
 - `/start` - Start the bot and receive a welcome message with options (Timetable, Homework, Settings, Untis Login Data).
 - `/lang` - Select your preferred language.
 - `/timetable` - Timetable.
+- `/resetai` - Reset ai memory
 
 ### Admin-Only Commands
 
