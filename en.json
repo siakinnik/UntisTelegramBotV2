@@ -1,0 +1,135 @@
+{
+  "menu": {
+    "welcome": "Welcome, {{firstName}}!\n\nTo interact with this bot use keys below,\nor commands (commands list /help).",
+    "buttons": {
+      "timetable": "🗓Timetable",
+      "homework": "📚HW",
+      "profile": "🪪Profile",
+      "settings": "⚙️Settings",
+      "text": "📱Menu"
+    }
+  },
+  "timetable": {
+    "header": "🗓Timetable for",
+    "today": "today",
+    "no_lessons": "No lessons today ➖\nRelax.",
+    "active": "Active",
+    "canceled": "Canceled",
+    "lesson": {
+      "time": "🕓Time:",
+      "teacher": "👨‍🏫Teacher:",
+      "subject": "📖Subject:",
+      "room": "🔢Room:",
+      "status": "❗️Status:"
+    },
+    "buttons": {
+      "week_view": "📖To week view",
+      "day_view": "📖To day view",
+      "prev": "◀️Previous day",
+      "next": "▶️Next day"
+    },
+    "error": "❌Request for date: {{date}}\n\nToo far from today's date! The server did not return any result! To get today's timetable use /timetable.",
+    "week": {
+      "unavailable": "Week view is not available now!"
+    }
+  },
+  "profile": {
+    "header": "Profile\n\nName: {{name}}",
+    "buttons": {
+      "back": "Back"
+    }
+  },
+  "settings": {
+    "no_info": "No data.",
+    "header": "⚙️Settings:",
+    "untis_data": "📔Untis data:",
+    "language": "🌎Language:",
+    "notifications": "🔔Notifications:",
+    "morningNotifications": "🔔Morning notificatons:",
+    "on": "🟢On.",
+    "off": "🔴Off.",
+    "HWNotif": "🔔Newhomework-notifications:",
+    "buttons": {
+      "language": "🌎Language",
+      "notifications": "🔔Notifications",
+      "untis_data": "🪪Untis",
+      "back": "Back"
+    },
+    "notifications_prompt": {
+      "text": "*🔔Notifications:*",
+      "buttons": {
+        "morning": "Morning notifications-",
+        "canc_subs": "Canceles/Substitutes notifications-",
+        "homework": "Newhomework-notifications-",
+        "enabled": "on",
+        "disabled": "off"
+      }
+    }
+  },
+  "untis_data": {
+    "head": "👤*Untis profile:*",
+    "isInfo": "\n\nUsername: {{data.uname}}\nPassword: {{data.pass}}\nStatus: ",
+    "noInfo": "\n\nNo information!",
+    "valid": "Data is valid.",
+    "invalid": "Data is not valid.\nYour data will be deleted from channel and DB, so you need to provide us new valid data.",
+    "ChangeData": "✏️Change data",
+    "RmData": "➖Remove data",
+    "success": "*Data updated\\!*\nUsername: {{username}}\nPassword: {{pass}}",
+    "login": "*Enter your login:*",
+    "pass": "*Now enter your password:*"
+  },
+  "errors": {
+    "ChangeData": "⛔️*Your data is not valid!*\nReturn to menu and try again.",
+    "login": "⛔️*Failed to login!*\nYour data will be deleted from channel and DB, so you need to provide us new valid data.",
+    "info": "⛔️Unknown error when getting info.",
+    "fetch_timetable": "⛔️Unknown error when fetching timetable:",
+    "user_not_found": "❗️User not found. Pls, register.",
+    "untis_credentials_required": "❗️Pls fill the untis data.",
+    "unknown_command": "❌Command not found!",
+    "unknown_error": "⛔️Unknown error:"
+  },
+  "general": {
+    "success": "✅Successfully!",
+    "date_today": "today",
+    "editDataFirst": "Please finish editing the data before using other functions.",
+    "nocommand": "Command not found. If you were trying to use the AI — you have reached your message limit (20). It will reset 24 hours after your last AI message."
+  },
+  "homeworks": {
+    "header": "📚Homewroks for a week:",
+    "lesson": "📖Subject:",
+    "teacher": "👨‍🏫Teacher:"
+  },
+  "notifications": {
+    "substit": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has been substituted with:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "rosubstit": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has a changed room:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 {data}",
+    "tesubstit": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has a substituted teacher:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "canceled": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has been canceled:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "morningCanceled": "*Canceled lesson {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
+    "morningSubstit": "*Substituted lesson {lesson.startTime} - {lesson.endTime} to:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
+    "goodMorning": "*Good morning, {user}!* 🌞\nToday you have:",
+    "noChanges": "No substitutions or cancellations today. 🌞"
+  },
+  "adminPanel": {
+    "header": "*👋Welcome, admin!*\n\nWhat do you want to do?",
+    "buttons": {
+      "header": "🔧Admin panel",
+      "sendNotification": "🔔Send to everyone",
+      "errorLink": "❌Errors",
+      "userList": "📖 List of users"
+    },
+    "sendall": {
+      "header": "*Send me a message to send to all users:*",
+      "success": "The message has been sent to all users."
+    },
+    "getUsers": {
+      "header": "*All users:*\n",
+      "headerData": "*All users with their data:*\n",
+      "noUsers": "There are no users."
+    }
+  },
+  "ai": {
+    "timetable": "Call to the timetable... ⏳",
+    "memoryCleared": "AI memory cleared.",
+    "memoryEmpty": "AI memory is already empty.."
+  }
+}

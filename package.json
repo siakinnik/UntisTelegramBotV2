@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@google/genai": "^1.18.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.3.1",
+    "mysql2": "^3.11.2",
+    "node-cron": "^3.0.3",
+    "readline-sync": "^1.4.10",
+    "sqlite3": "^5.1.7",
+    "telegraf": "^4.16.3",
+    "webuntis": "^2.2.1",
+    "ws": "^8.20.0"
+  },
+  "name": "untisbot",
+  "version": "1.0.0",
+  "description": "UntisBot is a multilingual Telegram bot (supports Russian, English, and German) designed to keep you updated with your school timetable. It provides essential features to ensure you never miss an important update, such as checking your schedule every hour for the next two days and notifying you about canceled or substituted classes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

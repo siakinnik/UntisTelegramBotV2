@@ -1,0 +1,135 @@
+{
+  "menu": {
+    "welcome": "Добро пожаловать, {{firstName}}!\n\nДля взаимодействия с ботом используйте клавиши ниже,\nлибо команды (Полный лист /help).",
+    "buttons": {
+      "timetable": "🗓Расписание",
+      "homework": "📚ДЗ",
+      "profile": "🪪Профиль",
+      "settings": "⚙️Настройки",
+      "text": "📱Меню"
+    }
+  },
+  "timetable": {
+    "header": "🗓Расписание на",
+    "today": "сегодня",
+    "no_lessons": "Уроков нет ➖\nОтдыхай.",
+    "active": "Активно",
+    "canceled": "Отменён",
+    "lesson": {
+      "time": "🕓Время:",
+      "teacher": "👨‍🏫Учитель:",
+      "subject": "📖Предмет:",
+      "room": "🔢Кабинет:",
+      "status": "❗️Статус:"
+    },
+    "buttons": {
+      "week_view": "📖На неделю",
+      "day_view": "📖На день",
+      "prev": "◀️Пред. день",
+      "next": "▶️След. день"
+    },
+    "error": "❌Запрос на дату: {{date}}\n\nСлишком далеко от сегодняшней даты! Сервер не вернул результат! Чтобы получить расписание на сегодня используйте /timetable.",
+    "week": {
+      "unavailable": "Просмотр расписания за неделю недоступен."
+    }
+  },
+  "profile": {
+    "header": "Профиль\n\nИмя: {{name}}",
+    "buttons": {
+      "back": "Назад"
+    }
+  },
+  "settings": {
+    "no_info": "Не укзанно.",
+    "header": "⚙️Настройки:",
+    "untis_data": "📔Данные унтиса:",
+    "language": "🌎Язык:",
+    "notifications": "🔔Уведомления:",
+    "morningNotifications": "🔔Утренние уведомления:",
+    "HWNotif": "🔔Уведомления о новых ДЗ:",
+    "on": "🟢Вкл.",
+    "off": "🔴Выкл.",
+    "buttons": {
+      "language": "🌎Language",
+      "notifications": "🔔Уведомления",
+      "untis_data": "🪪Унтис",
+      "back": "Назад"
+    },
+    "notifications_prompt": {
+      "text": "*🔔Уведомления:*",
+      "buttons": {
+        "morning": "Утренние уведомления-",
+        "canc_subs": "Уведомления об отменах/заменах-",
+        "homework": "Уведомления о новых ДЗ-",
+        "enabled": "вкл",
+        "disabled": "выкл"
+      }
+    }
+  },
+  "untis_data": {
+    "head": "👤*Профиль untis:*",
+    "isInfo": "\n\nИмя пользователя: {{data.uname}}\nПароль: {{data.pass}}\nСтатус: ",
+    "noInfo": "\n\nНе заполнено!",
+    "valid": "Данные валидные.",
+    "invalid": "Данные не валидные.\nМы удалим ваши данные из БД и канала и вам нужно будет ввести валидные.",
+    "ChangeData": "✏️Поменять данные",
+    "RmData": "➖Удалить данные",
+    "success": "*Данные обновлены\\!*\nUsername: {{username}}\nPassword: {{pass}}",
+    "login": "*Введите ваш логин:*",
+    "pass": "*Теперь введите ваш пароль:*"
+  },
+  "errors": {
+    "ChangeData": "⛔️*Указанные данные не валидны*!\nВернитесь в меню и попробуйте заного.",
+    "login": "⛔️*Невалидныйе данные!*\nМы удалим ваши данные из БД и канала и вам нужно будет ввести валидные.",
+    "info": "⛔️Ошибка при получении информации.",
+    "fetch_timetable": "⛔️Ошибка при получении расписания:",
+    "user_not_found": "❗️Пользователь не найден. Пожалуйста, зарегистрируйтесь.",
+    "untis_credentials_required": "❗️Укажите свои учетные данные untis.",
+    "unknown_command": "❌Команда не найдена!",
+    "unknown_error": "⛔️Неизвестная ошибка:"
+  },
+  "general": {
+    "success": "✅Успешно!",
+    "date_today": "сегодня",
+    "editDataFirst": "Пожалуйста, завешите изменение данных перед использованием остальных функций.",
+    "nocommand": "Команда не найдена, если вы пытались обратиться к ИИ — вы исчерпали свой лимит по сообщениям (20 штук). Он возобновится через сутки после последнего сообщения ИИ."
+  },
+  "homeworks": {
+    "header": "📚Домашние задания на неделю:",
+    "lesson": "📖Урок:",
+    "teacher": "👨‍🏫Учитель:"
+  },
+  "notifications": {
+    "substit": "*ℹ️У вас заменён урок {lesson.date} в {lesson.startTime} - {lesson.endTime} на:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
+    "rosubstit": "*ℹ️ У вас изменена аудитория на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 {data}",
+    "tesubstit": "*ℹ️ У вас заменён преподаватель на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "canceled": "*ℹ️У вас отменён урок {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
+    "morningCanceled": "*Отменён урок {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
+    "morningSubstit": "*Заменён урок {lesson.startTime} - {lesson.endTime} на:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
+    "goodMorning": "*Доброе утро, {user}!* 🌞\nУ вас сегодня:",
+    "noChanges": "На сегодня замен/отмен нет. 🌞"
+  },
+  "adminPanel": {
+    "header": "*👋Добро пожаловать, админ!*\n\nЧто вы хотите сделать?",
+    "buttons": {
+      "header": "🔧Панель администратора",
+      "sendNotification": "🔔Отправить всем",
+      "errorLink": "❌Ошибки",
+      "userList": "📖 Список пользователей"
+    },
+    "sendall": {
+      "header": "*Введите сообщение для отправки всем пользователям:*",
+      "success": "Сообщение отправлено всем пользователям."
+    },
+    "getUsers": {
+      "header": "*Все пользователи:* \n",
+      "headerData": "*Все пользователи с их данными:* \n",
+      "noUsers": "Пользователей нет."
+    }
+  },
+  "ai": {
+    "timetable": "Запрос к расписанию... ⏳",
+    "memoryCleared": "Память ИИ очищена.",
+    "memoryEmpty": "Память ИИ уже пуста."
+  }
+}

@@ -1,0 +1,4 @@
+node_modules
+untis.db
+untis.sql
+.env
