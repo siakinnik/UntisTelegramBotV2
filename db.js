@@ -3,11 +3,11 @@
 // ----------------------------------------------------------------
 
 const sqlite3 = require('sqlite3').verbose();
-const config = require('./config.json');
+const { dbPath } = require('./config');
 
 const createConn = () => {
     return new Promise((resolve, reject) => {
-        const db = new sqlite3.Database(config.dbPath, (err) => {
+        const db = new sqlite3.Database(dbPath, (err) => {
             if (err) {
                 reject(err);
             } else {
