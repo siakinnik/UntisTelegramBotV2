@@ -100,9 +100,10 @@
     "teacher": "👨‍🏫Учитель:"
   },
   "notifications": {
-    "substit": "*ℹ️У вас заменён урок {lesson.date} в {lesson.startTime} - {lesson.endTime} на:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
-    "rosubstit": "*ℹ️ У вас изменена аудитория на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 {data}",
-    "tesubstit": "*ℹ️ У вас заменён преподаватель на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "substit": "*ℹ️ У вас добавлен урок {lesson.date} в {lesson.startTime} - {lesson.endTime} на:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
+    "rosubstit": "*ℹ️ У вас изменена аудитория на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
+    "tesubstit": "*ℹ️ У вас заменён преподаватель на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "bothsubstit": "*ℹ️ У вас заменёны и преподаватель, и аудитория на занятии {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
     "canceled": "*ℹ️У вас отменён урок {lesson.date} в {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
     "morningCanceled": "*Отменён урок {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
     "morningSubstit": "*Заменён урок {lesson.startTime} - {lesson.endTime} на:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",

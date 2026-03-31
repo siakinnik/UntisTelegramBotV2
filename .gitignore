@@ -1,4 +1,6 @@
 node_modules
 untis.db
 untis.sql
+test.cjs
+logs
 .env

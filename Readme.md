@@ -1,7 +1,7 @@
 # Untis Telegram Bot (v2)
 
 **✅ Current Version: v2**  
-This is the **active, maintained version** of UntisBot.  
+v2 is the **active, maintained version** of UntisBot.  
 The older repository/version is **outdated, broken, and not recommended**. Use this version instead.  
 
 **BUILT IN AI**

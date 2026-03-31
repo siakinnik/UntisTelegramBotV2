@@ -100,9 +100,10 @@
     "teacher": "👨‍🏫Teacher:"
   },
   "notifications": {
-    "substit": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has been substituted with:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
-    "rosubstit": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has a changed room:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 {data}",
-    "tesubstit": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has a substituted teacher:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "substit": "*ℹ️ You have a new lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
+    "rosubstit": "*ℹ️ Your classroom has been changed on {lesson.date} from {lesson.startTime} to {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
+    "tesubstit": "*ℹ️ Your teacher has been replaced on {lesson.date} from {lesson.startTime} to {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+    "bothsubstit": "*ℹ️ Both your teacher and classroom have been changed on {lesson.date} from {lesson.startTime} to {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
     "canceled": "*ℹ️ Your lesson on {lesson.date} from {lesson.startTime} to {lesson.endTime} has been canceled:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
     "morningCanceled": "*Canceled lesson {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
     "morningSubstit": "*Substituted lesson {lesson.startTime} - {lesson.endTime} to:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",

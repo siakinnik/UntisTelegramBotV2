@@ -100,9 +100,10 @@
         "teacher": "👨‍🏫Lehrer:"
     },
     "notifications": {
-        "substit": "*ℹ️ Ihre Unterrichtsstunde am {lesson.date} von {lesson.startTime} bis {lesson.endTime} wurde durch Folgendes ersetzt:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
-        "rosubstit": "*ℹ️ Ihre Unterrichtsstunde am {lesson.date} von {lesson.startTime} bis {lesson.endTime} hat eine geänderte Raumzuweisung:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 {data}",
-        "tesubstit": "*ℹ️ Ihre Unterrichtsstunde am {lesson.date} von {lesson.startTime} bis {lesson.endTime} hat eine Lehrervertretung:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+        "substit": "*ℹ️ Ihr habt neue Stunde am {lesson.date} von {lesson.startTime} bis {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
+        "rosubstit": "*ℹ️ Ihr Unterrichtsraum wurde am {lesson.date} von {lesson.startTime} bis {lesson.endTime} geändert:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
+        "tesubstit": "*ℹ️ Ihr Lehrer wurde am {lesson.date} von {lesson.startTime} bis {lesson.endTime} ersetzt:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
+        "bothsubstit": "*ℹ️ Sowohl Ihr Lehrer als auch der Unterrichtsraum wurden am {lesson.date} von {lesson.startTime} bis {lesson.endTime} ersetzt:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 ~{lesson.teachers[0].orgname}~ → {lesson.teachers[0].fullName}\n🔢 ~{lesson.rooms[0].orgname}~ → {lesson.rooms[0].fullName}",
         "canceled": "*ℹ️ Ihre Unterrichtsstunde am {lesson.date} von {lesson.startTime} bis {lesson.endTime} wurde entfall:*\n\n📔 {lesson.subjects[0].fullName} ({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName} ({lesson.rooms[0].shortName})",
         "morningCanceled": "*Entfall Unterricht {lesson.startTime} - {lesson.endTime}:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
         "morningSubstit": "*Ersatzunterricht {lesson.startTime} - {lesson.endTime} für:*\n\n📔 {lesson.subjects[0].fullName}({lesson.subjects[0].shortName})\n🧑‍🏫 {data}\n🔢 {lesson.rooms[0].fullName}({lesson.rooms[0].shortName})",
@@ -129,7 +130,7 @@
     },
     "ai": {
         "timetable": "Aufruf zum Stundenplan... ⏳",
-    "memoryCleared": "AI-Speicher gelöscht.",
-    "memoryEmpty": "KI-Speicher ist bereits leer."
+        "memoryCleared": "AI-Speicher gelöscht.",
+        "memoryEmpty": "KI-Speicher ist bereits leer."
     }
 }

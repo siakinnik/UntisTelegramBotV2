@@ -10,6 +10,7 @@ const decrypt = require('./encrypter/decrypter'); // Decription functions
 const bot = require('./utils/bot'); // Telegram bot(Telegraf bot with some node-telegram-bot-api functions)
 const cron = require('node-cron'); // Timers
 const { GoogleGenAI } = require('@google/genai'); // Gemeni
+const logger = require("./utils/Logger"); // Custom Logger
 
 // Constants
 const {
@@ -52,10 +53,11 @@ const { CheckCanceles } = require("./utils/CheckCanceles");
 
 const { goodMorning } = require("./utils/goodMorning");
 
-// const CheckHW = async () => siakinnik - TODO
-
+CheckCanceles();
+// setInterval(CheckCanceles, 5000);
 setInterval(CheckCanceles, 3600000);
-setInterval(() => Object.assign(prevData, {}), 86400000)
+// const CheckHW = async () => siakinnik - TODO
+setInterval(() => { for (const key in prevData) { if (Object.hasOwnProperty.call(prevData, key)) { delete prevData[key]; } } }, 86400000);
 
 cron.schedule('30 6 * * 1-5', () => {
     goodMorning();
@@ -98,7 +100,7 @@ bot.on('message', async (ctx) => {
             `SELECT lang FROM users WHERE telegramid = ?`, [chatId]
         );
         lang = DBinfo[0]?.lang;
-        console.log("DEBUG DB:", chatId, DBinfo);
+        // logger.log("DEBUG DB:", chatId, DBinfo);
         if (lang === null) {
             if (/^\/lang( (.+))?$/.test(msg.text)) {
                 Lang(ctx)
@@ -178,7 +180,12 @@ bot.on('message', async (ctx) => {
                                 .replace('{{username}}', username)
                                 .replace('{{pass}}', masked),
                             { parse_mode: "MarkdownV2" }
-                        ).catch((e) => { console.log(e) });
+                        ).catch((e) => {
+                            logger.log(`index.js (line 184) | Unknown Error ${e.message}`, {
+                                level: 'error',
+                                error: e
+                            });
+                        });
                         // await connection.close();
                     } catch (error) {
                         await ctx.reply(`${userLang.errors.unknown_error} ${error.message}`);
@@ -235,33 +242,34 @@ bot.on('message', async (ctx) => {
                     bot.telegram.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`)
                 }
             } else if (/^\/donate( (.+))?$/.test(msg.text)) {
-                const params = msg.text.match(/^\/donate( (.+))?$/);
-                let amount = 1
-                if (params && params[2]) {
-                    if (!isNaN(+params[2])) {
-                        if (+params[2] < 100001) {
-                            amount = +params[2]
-                        } else {
-                            amount = 100000
-                            s
-                        }
-                    }
-                }
-                const info = {
-                    chatId: msg.chat.id,
-                    title: 'Donation',
-                    description: `Donation ${amount} star(s) to Untis`,
-                    payload: `donation_${Date.now()}`,
-                    provider_token: '',
-                    currency: 'XTR',
-                    prices: [
-                        {
-                            label: 'Donate to Untis Pro Max',
-                            amount: amount,
-                        }
-                    ],
-                };
-                bot.sendInvoice(info.chatId, info.title, info.description, info.payload, info.provider_token, info.currency, JSON.stringify(info.prices));
+                // siakinnik - deleted, no donations
+                // const params = msg.text.match(/^\/donate( (.+))?$/);
+                // let amount = 1
+                // if (params && params[2]) {
+                //     if (!isNaN(+params[2])) {
+                //         if (+params[2] < 100001) {
+                //             amount = +params[2]
+                //         } else {
+                //             amount = 100000
+                //             s
+                //         }
+                //     }
+                // }
+                // const info = {
+                //     chatId: msg.chat.id,
+                //     title: 'Donation',
+                //     description: `Donation ${amount} star(s) to Untis`,
+                //     payload: `donation_${Date.now()}`,
+                //     provider_token: '',
+                //     currency: 'XTR',
+                //     prices: [
+                //         {
+                //             label: 'Donate to Untis Pro Max',
+                //             amount: amount,
+                //         }
+                //     ],
+                // };
+                // bot.sendInvoice(info.chatId, info.title, info.description, info.payload, info.provider_token, info.currency, JSON.stringify(info.prices));
             } else if (msg.text.toLowerCase() === 'menu' || msg.text.toLowerCase() === 'меню' || msg.text.toLowerCase() === 'menü') {
                 menu(userLang, chatId, msg)
             } else if (msg.text === '/resetai') {
@@ -322,7 +330,7 @@ bot.on('message', async (ctx) => {
                 }
 
                 if (results[0].msgCount > userAiLimit && chatId !== owner) {
-                    console.log('test')
+                    // console.log('test')
                     memory[chatId] = [];
                     await connection.query("UPDATE users SET lastReset = CURRENT_TIMESTAMP WHERE telegramid = ?", [chatId]);
                     await connection.query("UPDATE users SET msgCount = 0 WHERE telegramid = ?", [chatId]);
@@ -1002,7 +1010,12 @@ bot.on('callback_query', async (ctx) => {
                         data.msgid = msgid
                     } else {
                         data.isInfo = true
-                        const sentMessage = await bot.sendMessage(dataChannel, '.', { reply_to_message_id: msgid }).catch((e) => { console.log(e) });
+                        const sentMessage = await bot.sendMessage(dataChannel, '.', { reply_to_message_id: msgid }).catch((e) => {
+                            logger.log(`index.js (line 1014) | Unknown Error ${e.message}`, {
+                                level: 'error',
+                                error: e
+                            });
+                        });
                         bot.telegram.deleteMessage(dataChannel, sentMessage.message_id).catch(() => { })
                         const parsedData = JSON.parse(sentMessage.reply_to_message.text)
                         data.uname = decrypt(parsedData.username);
@@ -1247,8 +1260,16 @@ bot.on('callback_query', async (ctx) => {
 
 
 // Bot start
-bot.launch().then(() => {
-    console.log('Bot running.');
-}).catch((err) => {
-    console.error('Error launching bot:', err);
-});
+(async () => {
+    await logger.startup();
+    bot.launch().then(() => {
+        logger.log(`index.js | Bot running.`, {
+            level: 'info'
+        });
+    }).catch((err) => {
+        logger.log(`index.js (bot start) | Unknown Error ${err.message}`, {
+            level: 'error',
+            error: err
+        });
+    });
+})();
