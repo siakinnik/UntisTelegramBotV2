@@ -21,13 +21,21 @@ const getTimetableForDay = async (chatId, username, pass, date) => {
             return 'NoSchoolYear'
         }
     } catch (e) {
-        bot.sendMessage(errChannel, `ERROR login:\nuser: ${chatId}\n${e}`)
+        // bot.sendMessage(errChannel, `ERROR login:\nuser: ${chatId}\n${e}`)
+        logger.log(`getTimetableForDay.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
+            level: 'error',
+            error: e
+        });
         return 'LoginFailed'
     }
     try {
         return await untis.getOwnTimetableFor(date)
     } catch (e) {
-        bot.sendMessage(errChannel, `ERROR:\nuser: ${chatId}\n${e}`)
+        // bot.sendMessage(errChannel, `ERROR:\nuser: ${chatId}\n${e}`);
+        logger.log(`getTimetableForDay.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
+            level: 'error',
+            error: e
+        });
         return
     }
 };

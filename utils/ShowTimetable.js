@@ -76,7 +76,11 @@ const ShowTimetable = async (lang, currentView, username, password, chatId, msg,
                 }
             })
         } else {
-            await bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${e}`)
+            // await bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${e}`);
+            logger.log(`ShowTimetable.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
+                level: 'error',
+                error: e
+            });
             console.error(e);
         };
     } finally {

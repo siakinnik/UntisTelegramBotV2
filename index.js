@@ -50,8 +50,9 @@ const { getTimetableForDay } = require("./utils/getTimetableForDay");
 // const { formatTime } = require("./utils/formatTime");
 const { formatTimetable } = require("./utils/formatTimetable");
 const { CheckCanceles } = require("./utils/CheckCanceles");
+const { getLineNumber } = require("./utils/getLineNumber");
 
-const { goodMorning } = require("./utils/goodMorning");
+// const { goodMorning } = require("./utils/goodMorning");
 
 CheckCanceles();
 // setInterval(CheckCanceles, 5000);
@@ -59,11 +60,11 @@ setInterval(CheckCanceles, 3600000);
 // const CheckHW = async () => siakinnik - TODO
 setInterval(() => { for (const key in prevData) { if (Object.hasOwnProperty.call(prevData, key)) { delete prevData[key]; } } }, 86400000);
 
-cron.schedule('30 6 * * 1-5', () => {
-    goodMorning();
-}, {
-    timezone: "Europe/Berlin"
-});
+// cron.schedule('30 6 * * 1-5', () => {
+//     goodMorning();
+// }, {
+//     timezone: "Europe/Berlin"
+// });
 
 bot.on('message', async (ctx) => {
     const msg = ctx.message;
@@ -551,9 +552,9 @@ bot.on('message', async (ctx) => {
                             results.forEach(user => {
                                 if (user.telegramid !== owner) {
                                     try {
-                                        bot.sendMessage(user.telegramid, `${messageToSend.replace(/\\n/gi, '\n')}`, { parse_mode: "Markdown" }).catch((e) => bot.sendMessage(errChannel, `ERROR:\n${e}`));
+                                        bot.sendMessage(user.telegramid, `${messageToSend.replace(/\\n/gi, '\n')}`, { parse_mode: "Markdown" }).catch((e) => logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${e.message}`, { level: "error", error: e }));
                                     } catch (e) {
-                                        bot.sendMessage(errChannel, `ERROR:\n${e}`)
+                                        logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${e.message}`, { level: "error", error: e })
                                     }
                                 }
                             });
@@ -565,7 +566,11 @@ bot.on('message', async (ctx) => {
         }
     } catch (error) {
         bot.sendMessage(chatId, `⛔️${error.message}`);
-        bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+        // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+        logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+            level: 'error',
+            error: error
+        });
     } finally {
         if (connection) {
             try {
@@ -701,8 +706,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (callbackQuery.data === 'timetable') {
             bot.telegram.deleteMessage(msg.chat.id, msg.message_id).catch(() => { })
@@ -726,8 +735,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.fetch_timetable}. ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (callbackQuery.data === 'menu') {
             bot.telegram.deleteMessage(msg.chat.id, msg.message_id).catch(() => { })
@@ -841,8 +854,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (/^prev:((.+))?$/.test(callbackQuery.data)) {
             const splited = callbackQuery.data.split(':')
@@ -883,8 +900,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (/^settings((.+))?$/.test(callbackQuery.data)) {
             try {
@@ -957,8 +978,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (callbackQuery.data === 'lang') {
             Lang(ctx)
@@ -993,8 +1018,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.info} ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (callbackQuery.data === 'UntisData') {
             try {
@@ -1083,8 +1112,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             }
         } else if (/^notif:((.+))?$/.test(callbackQuery.data)) {
             const splited = callbackQuery.data.split(':')
@@ -1120,8 +1153,12 @@ bot.on('callback_query', async (ctx) => {
                     bot.answerCallbackQuery(callbackQuery.id, userLang.general.success);
                 } catch (error) {
                     bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                    bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                    console.error(error);
+                    // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                    // console.error(error);
+                    logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                        level: 'error',
+                        error: error
+                    });
                 }
             } else {
                 const type = splited[1] === 'MR' ? 'morningNotif' : 'HWNotif'
@@ -1156,8 +1193,12 @@ bot.on('callback_query', async (ctx) => {
                     bot.answerCallbackQuery(callbackQuery.id, userLang.general.success);
                 } catch (error) {
                     bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
-                    bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                    console.error(error);
+                    // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                    // console.error(error);
+                    logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                        level: 'error',
+                        error: error
+                    });
                 }
             }
         } else if (callbackQuery.data === 'ChangeData') {
@@ -1199,8 +1240,12 @@ bot.on('callback_query', async (ctx) => {
                 }
             } catch (error) {
                 bot.sendMessage(chatId, `⛔️${error.message}`);
-                bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
-                console.error(error);
+                // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                // console.error(error);
+                logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
             } finally {
                 if (conn) conn.close();
             }
@@ -1267,7 +1312,7 @@ bot.on('callback_query', async (ctx) => {
             level: 'info'
         });
     }).catch((err) => {
-        logger.log(`index.js (bot start) | Unknown Error ${err.message}`, {
+        logger.log(`index.js (bot start/line ${getLineNumber()}) | Unknown Error ${err.message}`, {
             level: 'error',
             error: err
         });
