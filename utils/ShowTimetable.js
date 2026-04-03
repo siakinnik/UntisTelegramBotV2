@@ -6,11 +6,12 @@
 const bot = require('./bot'); // Telegram bot(Telegraf bot with some node-telegram-bot-api functions)
 const dateTools = require('date-fns'); // Date formating tool
 const createConn = require('../db'); // MySQL-like sqlite wrapper
+const { getLineNumber } = require("./getLineNumber");
 
 // Constants
 const {
     dataChannel,
-    errChannel
+    // errChannel
 } = require('../config');
 
 const { menuButton } = require("./menuButton"); // (lang) 

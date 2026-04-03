@@ -4,9 +4,11 @@
 
 // Dependencies
 const api = require('webuntis'); // Untis web-api
-const bot = require('./bot');
+const { getLineNumber } = require("./getLineNumber");
+// const bot = require('./bot');
+
 const {
-    errChannel,
+    // errChannel,
     school,
     domain
 } = require('../config');
