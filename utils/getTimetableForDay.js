@@ -4,6 +4,7 @@
 
 // Dependencies
 const api = require('webuntis'); // Untis web-api
+const logger = require("./Logger"); // Custom Logger
 const { getLineNumber } = require("./getLineNumber");
 // const bot = require('./bot');
 

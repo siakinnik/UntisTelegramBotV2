@@ -8,7 +8,7 @@ const createConn = require('./db'); // MySQL-like sqlite wrapper
 const encrypt = require('./encrypter/encrypter'); // Encryption function
 const decrypt = require('./encrypter/decrypter'); // Decription functions
 const bot = require('./utils/bot'); // Telegram bot(Telegraf bot with some node-telegram-bot-api functions)
-const cron = require('node-cron'); // Timers
+// const cron = require('node-cron'); // Timers
 const { GoogleGenAI } = require('@google/genai'); // Gemeni
 const logger = require("./utils/Logger"); // Custom Logger
 
@@ -101,7 +101,7 @@ bot.on('message', async (ctx) => {
             `SELECT lang FROM users WHERE telegramid = ?`, [chatId]
         );
         lang = DBinfo[0]?.lang;
-        // logger.log("DEBUG DB:", chatId, DBinfo);
+        // logger.log("DEBUG DB:", chatId, DBinfo, { level: "info" });
         if (lang === null) {
             if (/^\/lang( (.+))?$/.test(msg.text)) {
                 Lang(ctx)
@@ -244,33 +244,6 @@ bot.on('message', async (ctx) => {
                 }
             } else if (/^\/donate( (.+))?$/.test(msg.text)) {
                 // siakinnik - deleted, no donations
-                // const params = msg.text.match(/^\/donate( (.+))?$/);
-                // let amount = 1
-                // if (params && params[2]) {
-                //     if (!isNaN(+params[2])) {
-                //         if (+params[2] < 100001) {
-                //             amount = +params[2]
-                //         } else {
-                //             amount = 100000
-                //             s
-                //         }
-                //     }
-                // }
-                // const info = {
-                //     chatId: msg.chat.id,
-                //     title: 'Donation',
-                //     description: `Donation ${amount} star(s) to Untis`,
-                //     payload: `donation_${Date.now()}`,
-                //     provider_token: '',
-                //     currency: 'XTR',
-                //     prices: [
-                //         {
-                //             label: 'Donate to Untis Pro Max',
-                //             amount: amount,
-                //         }
-                //     ],
-                // };
-                // bot.sendInvoice(info.chatId, info.title, info.description, info.payload, info.provider_token, info.currency, JSON.stringify(info.prices));
             } else if (msg.text.toLowerCase() === 'menu' || msg.text.toLowerCase() === 'меню' || msg.text.toLowerCase() === 'menü') {
                 menu(userLang, chatId, msg)
             } else if (msg.text === '/resetai') {
@@ -1210,7 +1183,6 @@ bot.on('callback_query', async (ctx) => {
             const parse_mode = { parse_mode: 'Markdown' };
             bot.sendMessage(chatId, `${userLang.untis_data.login}`, parse_mode);
 
-            // Инициализируем сессию пользователя для ввода имени
             activeSessions.set(chatId, { step: 'username', username: null, password: null });
 
         } else if (callbackQuery.data === 'RmData') {
