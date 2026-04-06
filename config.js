@@ -9,7 +9,7 @@ require("dotenv").config();
 const token = process.env.BOT_TOKEN; // Telegram bot token
 const owner = +process.env.OWNER; // Owner's telegram chat id(not username)
 const dataChannel = +process.env.DATACN; // Channel for untis logins/passwords (AES + base64)
-const errChannel = +process.env.ERRCN; // Channel for errors
+const errChannel = +process.env.ERRCN; // Channel for errors & other logs
 const cryptoPass = process.env.CRYPTO_PASS; // Pass for AES
 const cryptoSalt = process.env.CRYPTO_SALT; // Salt for AES
 const school = process.env.SCHOOL; // School name on untis

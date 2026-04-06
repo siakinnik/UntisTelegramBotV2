@@ -84,8 +84,9 @@ class Logger {
         this.telegram = {
             enabled: options.telegram?.enabled ?? false,
             botToken: options.telegram?.botToken || '',
-            levelChats: options.telegram?.levelChats || {},
-            owners: options.telegram?.owners || []
+            // levelChats: options.telegram?.levelChats || {},
+            owners: options.telegram?.owners || [],
+            hashtags: options.telegram?.hashtags ?? false  // Add hashtag of the log level at the end of the log
         };
 
         // siakinnik - TODO
@@ -188,7 +189,8 @@ class Logger {
             })
             .filter(Boolean);
 
-        const str = [levelPart, ...orderedParts].join(' | ');
+        const hashtagPart = formatFor == 'telegram' && this.telegram.hashtags ? `\n#${level}` : '';
+        const str = [levelPart, ...orderedParts].join(' | ') + hashtagPart;
 
         // If JSON is on - add it to string
         if (this.format.json && !meta.noJson) {
@@ -272,6 +274,6 @@ class Logger {
 module.exports = new Logger({
     format: { jsonConsole: false, pretty: true },
     telegram: {
-        enabled: true, botToken: "noneed"
+        enabled: true, botToken: "noneed", hashtags: true
     }
 });
