@@ -51,6 +51,7 @@ const { getTimetableForDay } = require("./utils/getTimetableForDay");
 const { formatTimetable } = require("./utils/formatTimetable");
 const { CheckCanceles } = require("./utils/CheckCanceles");
 const { getLineNumber } = require("./utils/getLineNumber");
+const { preInit } = require("./utils/preinit");
 
 // const { goodMorning } = require("./utils/goodMorning");
 
@@ -1279,6 +1280,7 @@ bot.on('callback_query', async (ctx) => {
 // Bot start
 (async () => {
     await logger.startup();
+    await preInit();
     bot.launch().then(() => {
         logger.log(`index.js | Bot running.`, {
             level: 'info'

@@ -69,31 +69,8 @@ To install UntisBot, follow these steps:
    ```
 
 5. (Optional) change settings in `config.js`.
-6. Create the database and the users table:
-You can use sqlite-CLI provided with the code
 
-   ```sh
-   node sqlite-CLI.js untis.db
-   ```
-
-   ```sql
-   CREATE TABLE users (
-    telegramid INTEGER NOT NULL,
-    lang TEXT DEFAULT NULL,
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    msgid INTEGER NOT NULL DEFAULT 0,
-    view TEXT NOT NULL DEFAULT 'day',
-    notif TEXT NOT NULL DEFAULT 'yes',
-    isTester INTEGER NOT NULL DEFAULT 0,
-    morningNotif TEXT DEFAULT 'yes',
-    HWNotif TEXT DEFAULT 'yes',
-    aiEnabled INT DEFAULT 1,
-    lastReset DATE DEFAULT NULL,
-    msgCount INT DEFAULT 0
-    );
-    ```
-
-7. Start the bot:
+6. Start the bot:
 
    ```sh
    node index.js
