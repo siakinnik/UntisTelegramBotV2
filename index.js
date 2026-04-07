@@ -1292,3 +1292,18 @@ bot.on('callback_query', async (ctx) => {
         });
     });
 })();
+
+// Error handling
+process.on('uncaughtException', err => {
+    logger.log(`index.js (uncaughtException/line ${getLineNumber()}) | UncaughtException: ${err.message}`, {
+        level: 'error',
+        error: err
+    });
+});
+
+process.on('unhandledRejection', err => {
+    logger.log(`index.js (unhandledRejection/line ${getLineNumber()}) |UnhandledRejection: ${err.message}`, {
+        level: 'error',
+        error: err
+    });
+});
