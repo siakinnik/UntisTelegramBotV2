@@ -1,5 +1,8 @@
 # Untis Telegram Bot (v2)
 
+![Status](https://img.shields.io/badge/status-production-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
 **✅ Current Version: v2**  
 v2 is the **active, maintained version** of UntisBot.  
 The older repository/version is **outdated, broken, and not recommended**. Use this version instead.  
@@ -59,7 +62,7 @@ To install UntisBot, follow these steps:
    BOT_TOKEN=TelegramBotToken // Telegram bot token
    CRYPTO_PASS=changeMeInProduction  // Pass for AES
    CRYPTO_SALT=changeMeInProduction // Salt for AES
-   API_KEY=GemeniApiKey  // Gemeni api key, only needed if aiEnabled = true in config.js
+   API_KEY=GeminiApiKey  // Gemini api key, only needed if aiEnabled = true in config.js
    DB_PATH=./untis.db // Path to database
    OWNER=OwnerUserId(Not username) // Owner's telegram chat id(not username)
    DATACN=ChannelForUntisId(Not username, do not forget -100) // Channel for untis logins/passwords (AES + base64)
