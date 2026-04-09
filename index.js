@@ -59,7 +59,7 @@ CheckCanceles();
 // setInterval(CheckCanceles, 5000);
 setInterval(CheckCanceles, 3600000);
 // const CheckHW = async () => siakinnik - TODO
-setInterval(() => { for (const key in prevData) { if (Object.hasOwnProperty.call(prevData, key)) { delete prevData[key]; } } }, 86400000);
+setInterval(() => { for (const key in prevData) { if (Object.hasOwnProperty.call(prevData, key)) { delete prevData[key]; } } }, 172800000);
 
 // cron.schedule('30 6 * * 1-5', () => {
 //     goodMorning();
