@@ -7,7 +7,7 @@
 <summary>Screenshot of the Bot Interface</summary>
 <br>
 <img width="962" height="810" alt="image" src="https://github.com/user-attachments/assets/65633569-c372-42fb-9a7d-7875ddcd778f" />
-<details />
+</details>
 
 **✅ Current Version: v2**  
 v2 is the **active, maintained version** of UntisBot.  
