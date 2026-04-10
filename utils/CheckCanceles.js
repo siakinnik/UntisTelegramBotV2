@@ -58,13 +58,14 @@ const CheckCanceles = async () => {
                     user,
                     username,
                     password
-                }); 
+                });
 
                 const { newChanges } = data;
 
                 if (newChanges.partialChanges && newChanges.partialChanges.length > 0) {
-                    for (const lesson of newChanges.partialChanges) { 
+                    for (const lesson of newChanges.partialChanges) {
                         const room = lesson.ro && lesson.ro[0]; // Line SIX SEEEEVEN!!!
+                        const displayRoom = room ? `${room.longname || '---'}(${room.name || '???'})` : "---";
                         const teachers = lesson.te || [];
                         const subject = lesson.su && lesson.su[0];
 
@@ -83,8 +84,9 @@ const CheckCanceles = async () => {
                                 .replace("{lesson.subjects[0].fullName}", subject?.longname || "---")
                                 .replace("{lesson.subjects[0].shortName}", subject?.name || "---")
                                 .replace("{lesson.rooms[0].orgname}", lesson.ro[0]?.orgname || "???")
-                                .replace("{lesson.rooms[0].fullName}", room?.longname || "---")
-                                .replace("{lesson.rooms[0].shortName}", room?.name || "---")
+                                // .replace("{lesson.rooms[0].fullName}", room?.longname || "---")
+                                // .replace("{lesson.rooms[0].shortName}", room?.name || "---")
+                                .replace("{lesson.rooms[0].fullName}", displayRoom)
                                 .replace("{lesson.teachers[0].fullName}", formatedTeachers)
                                 .replace("{lesson.teachers[0].orgname}", formatedChangedTeachers)
                         } else if (roomChanged) {
@@ -95,8 +97,9 @@ const CheckCanceles = async () => {
                                 .replace("{lesson.subjects[0].fullName}", subject?.longname || "---")
                                 .replace("{lesson.subjects[0].shortName}", subject?.name || "---")
                                 .replace("{lesson.rooms[0].orgname}", lesson.ro[0]?.orgname || "???")
-                                .replace("{lesson.rooms[0].fullName}", room?.longname || "---")
-                                .replace("{lesson.rooms[0].shortName}", room?.name || "---")
+                                // .replace("{lesson.rooms[0].fullName}", room?.longname || "---")
+                                // .replace("{lesson.rooms[0].shortName}", room?.name || "---")
+                                .replace("{lesson.rooms[0].fullName}", displayRoom)
                                 .replace("{lesson.teachers[0].fullName}", formatedTeachers)
                         } else if (teacherChanged) {
                             messageText = userLang.notifications.tesubstit
@@ -105,8 +108,9 @@ const CheckCanceles = async () => {
                                 .replace("{lesson.endTime}", formatTime(lesson.endTime))
                                 .replace("{lesson.subjects[0].fullName}", subject?.longname || "---")
                                 .replace("{lesson.subjects[0].shortName}", subject?.name || "---")
-                                .replace("{lesson.rooms[0].fullName}", room?.longname || "---")
-                                .replace("{lesson.rooms[0].shortName}", room?.name || "---")
+                                // .replace("{lesson.rooms[0].fullName}", room?.longname || "---")
+                                // .replace("{lesson.rooms[0].shortName}", room?.name || "---")
+                                .replace("{lesson.rooms[0].fullName}", displayRoom)
                                 .replace("{lesson.teachers[0].fullName}", formatedTeachers)
                                 .replace("{lesson.teachers[0].orgname}", formatedChangedTeachers)
                         } else {
