@@ -3,6 +3,8 @@
 ![Status](https://img.shields.io/badge/status-production-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
+<img width="962" height="810" alt="image" src="https://github.com/user-attachments/assets/65633569-c372-42fb-9a7d-7875ddcd778f" />
+
 **✅ Current Version: v2**  
 v2 is the **active, maintained version** of UntisBot.  
 The older repository/version is **outdated, broken, and not recommended**. Use this version instead.  
