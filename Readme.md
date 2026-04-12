@@ -2,6 +2,7 @@
 
 ![Status](https://img.shields.io/badge/status-production-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
+![Contributors](https://img.shields.io/badge/contributors-1-blue)
 
 <details>
 <summary>Screenshot of the Bot Interface</summary>
@@ -65,16 +66,16 @@ To install UntisBot, follow these steps:
 4. Configure your Telegram bot token and other secrets in `.env`:
 
    ```env
-   BOT_TOKEN=TelegramBotToken // Telegram bot token
-   CRYPTO_PASS=changeMeInProduction  // Pass for AES
-   CRYPTO_SALT=changeMeInProduction // Salt for AES
-   API_KEY=GeminiApiKey  // Gemini api key, only needed if aiEnabled = true in config.js
-   DB_PATH=./untis.db // Path to database
-   OWNER=OwnerUserId(Not username) // Owner's telegram chat id(not username)
-   DATACN=ChannelForUntisId(Not username, do not forget -100) // Channel for untis logins/passwords (AES + base64)
-   ERRCN=ChannelForErrorLogsId(Not username, do not forget -100) // Channel for errors
-   SCHOOL=YourUntisSchoolName // School name on untis
-   UNTIS_DOMAIN=example:wilhelms-gymnasium.webuntis.com // School domain on untis (no http/https in front of it)
+   BOT_TOKEN=TelegramBotToken # Telegram bot token
+   CRYPTO_PASS=changeMeInProduction  # Pass for AES
+   CRYPTO_SALT=changeMeInProduction # Salt for AES
+   API_KEY=GeminiApiKey  # Gemini api key, only needed if aiEnabled = true in config.js
+   DB_PATH=./untis.db # Path to database
+   OWNER=12345678,87654321 # Admin ID(s). Support multiple IDs separated by comma 
+   DATACN=ChannelForUntisId(Not username, do not forget -100) # Channel for untis logins/passwords (AES + base64)
+   ERRCN=ChannelForErrorLogsId(Not username, do not forget -100) # Channel for errors
+   SCHOOL=YourUntisSchoolName # School name on untis
+   UNTIS_DOMAIN=example:wilhelms-gymnasium.webuntis.com # School domain on untis (no http/https in front of it)
    ```
 
 5. (Optional) change settings in `config.js`.
