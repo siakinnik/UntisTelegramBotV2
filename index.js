@@ -52,6 +52,7 @@ const { formatTimetable } = require("./utils/formatTimetable");
 const { CheckCanceles } = require("./utils/CheckCanceles");
 const { getLineNumber } = require("./utils/getLineNumber");
 const { preInit } = require("./utils/preinit");
+const { isInOwner } = require("./utils/isInOwner"); // (owner, id)
 
 // const { goodMorning } = require("./utils/goodMorning");
 
@@ -69,9 +70,16 @@ setInterval(() => { for (const key in prevData) { if (Object.hasOwnProperty.call
 
 bot.on('message', async (ctx) => {
     const msg = ctx.message;
-    if (onlyOwner && msg.chat.id !== owner) {
-        return
-    }
+    const isOwner = isInOwner(owner, msg.from.id);
+
+    if (msg.chat.type !== 'private') {
+        return;
+    };
+
+    if (onlyOwner && !isOwner) {
+        return;
+    };
+
     const currentDate = new Date();
     const currentTimestamp = Date.now()
     const chatId = msg.chat.id;
@@ -79,9 +87,6 @@ bot.on('message', async (ctx) => {
     let lang;
     let userLang;
 
-    if (msg.chat.type !== 'private') {
-        return;
-    }
     if (!msg.text) {
         return ctx.reply('Only text.')
     }
@@ -136,7 +141,10 @@ bot.on('message', async (ctx) => {
                         await untis.login();
                     } catch (e) {
                         isValid = false;
-                        await ctx.telegram.sendMessage(errChannel, `ERROR login:\nuser: ${chatId}\n${e}`);
+                        logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
+                            level: 'error',
+                            error: e
+                        });
                     }
 
                     if (!isValid) {
@@ -183,7 +191,7 @@ bot.on('message', async (ctx) => {
                                 .replace('{{pass}}', masked),
                             { parse_mode: "MarkdownV2" }
                         ).catch((e) => {
-                            logger.log(`index.js (line 184) | Unknown Error ${e.message}`, {
+                            logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
                                 level: 'error',
                                 error: e
                             });
@@ -191,7 +199,10 @@ bot.on('message', async (ctx) => {
                         // await connection.close();
                     } catch (error) {
                         await ctx.reply(`${userLang.errors.unknown_error} ${error.message}`);
-                        await ctx.telegram.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
+                        logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${error.message}`, {
+                            level: 'error',
+                            error: error
+                        });
                     } finally {
                         if (conn) {
                             await conn.close();
@@ -240,8 +251,11 @@ bot.on('message', async (ctx) => {
                         ctx.reply(`${userLang.errors.user_not_found}`);
                     }
                 } catch (error) {
-                    ctx.reply(`⛔️${userLang.errors.fetch_timetable}. ${error.message}`);
-                    bot.telegram.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`)
+                    await ctx.reply(`⛔️${userLang.errors.fetch_timetable}. ${error.message}`);
+                    logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${error.message}`, {
+                        level: 'error',
+                        error: error
+                    });
                 }
             } else if (/^\/donate( (.+))?$/.test(msg.text)) {
                 // siakinnik - deleted, no donations
@@ -273,7 +287,7 @@ bot.on('message', async (ctx) => {
                 } else {
                     return ctx.reply(`${userLang.errors.user_not_found}`);
                 }
-                if (chatId !== owner) {
+                if (!isOwner) {
                     if (results[0].lastReset) {
                         const lastResetTime = new Date(results[0].lastReset); // String to Date
                         const now = new Date();
@@ -298,13 +312,13 @@ bot.on('message', async (ctx) => {
                     connection.query("UPDATE users SET msgCount = msgCount + 1 WHERE telegramid = ?", [chatId]);
                 }
                 if (!memory[chatId]) memory[chatId] = [];
-                if (memory[chatId].filter(m => m.you).length > ownerAiLimit && chatId === owner) {
+                if (memory[chatId].filter(m => m.you).length > ownerAiLimit && isOwner) {
                     while (memory[chatId].filter(m => m.you).length > ownerAiLimit) {
                         memory[chatId].shift();
                     };
                 }
 
-                if (results[0].msgCount > userAiLimit && chatId !== owner) {
+                if (results[0].msgCount > userAiLimit && !isOwner) {
                     // console.log('test')
                     memory[chatId] = [];
                     await connection.query("UPDATE users SET lastReset = CURRENT_TIMESTAMP WHERE telegramid = ?", [chatId]);
@@ -441,7 +455,7 @@ bot.on('message', async (ctx) => {
 
                 ctx.reply(response.text);
 
-                if (chatId === owner) {
+                if (isOwner) {
                     if (/^\/getallusers( (.+))?$/.test(msg.text)) {
                         let params = msg.text.match(/^\/getallusers( (.+))?$/);
                         if (params && params[2]) {
@@ -464,7 +478,7 @@ bot.on('message', async (ctx) => {
                                 return result || adminLang.adminPanel.getUsers.noUsers;
                             };
 
-                            bot.sendMessage(owner, `${adminLang.adminPanel.getUsers.header}${toShow(results)}`, { parse_mode: 'Markdown' });
+                            bot.sendMessage(ctx.chat.id, `${adminLang.adminPanel.getUsers.header}${toShow(results)}`, { parse_mode: 'Markdown' });
                         } else if (params === 'data') {
                             const [results] = await connection.query(
                                 `SELECT * FROM users ORDER BY id`
@@ -482,25 +496,26 @@ bot.on('message', async (ctx) => {
                                 });
                                 return result || adminLang.adminPanel.getUsers.noUsers;
                             };
-                            bot.sendMessage(owner, `${adminLang.adminPanel.getUsers.header}TG id|Message id|Notif|Lang\n\n${toShow(results)}`, { parse_mode: 'Markdown' });
+                            bot.sendMessage(ctx.chat.id, `${adminLang.adminPanel.getUsers.header}TG id|Message id|Notif|Lang\n\n${toShow(results)}`, { parse_mode: 'Markdown' });
                         }
                     } else if (/^\/sendall( (.+))?$/.test(msg.text)) {
                         const adminLang = userLang;
                         const messageToSend = msg.text.split(' ').slice(1).join(' ');
                         const [results] = await connection.query(`SELECT telegramid FROM users`);
                         if (!messageToSend || messageToSend === '') {
-                            bot.sendMessage(owner, adminLang.adminPanel.sendall.header, { parse_mode: 'Markdown' })
+                            bot.sendMessage(ctx.chat.id, adminLang.adminPanel.sendall.header, { parse_mode: 'Markdown' })
                             let forwardMode = false;
 
                             bot.on('message', async (ctx, next) => {
                                 if (!forwardMode) return next();
 
                                 const ownerId = ctx.from.id;
-                                if (ownerId !== owner) return;
+                                const isOwner = isInOwner(owner, ownerId);
+                                if (!isOwner) return;
 
                                 try {
                                     for (const user of results) {
-                                        if (user.telegramid !== owner) {
+                                        if (!isInOwner(owner, user.telegramid)) {
                                             try {
                                                 await ctx.telegram.copyMessage(
                                                     user.telegramid,
@@ -508,15 +523,19 @@ bot.on('message', async (ctx) => {
                                                     ctx.message.message_id
                                                 );
                                             } catch (e) {
-                                                await ctx.telegram.sendMessage(errChannel, `ERROR:\n${e}`);
+                                                logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
+                                                    level: 'error',
+                                                    error: e
+                                                });
                                             }
                                         }
                                     }
 
-                                    await ctx.telegram.sendMessage(owner, adminLang.adminPanel.sendall.success);
+                                    await ctx.telegram.sendMessage(ownerId, adminLang.adminPanel.sendall.success);
                                 } catch (error) {
                                     await ctx.telegram.sendMessage(ownerId, `${userLang.errors.unknown_error} ${error.message}`);
-                                    await ctx.telegram.sendMessage(errChannel, `ERROR:\nuser:${ownerId}\n${error}`);
+                                    logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, { level: "error", error: error })
+                                    // await ctx.telegram.sendMessage(errChannel, `ERROR:\nuser:${ownerId}\n${error}`);
                                 } finally {
                                     forwardMode = false;
                                 }
@@ -532,7 +551,7 @@ bot.on('message', async (ctx) => {
                                     }
                                 }
                             });
-                            bot.sendMessage(owner, adminLang.adminPanel.sendall.success);
+                            bot.sendMessage(ctx.from.id, adminLang.adminPanel.sendall.success);
                         }
                     }
                 }
@@ -559,9 +578,12 @@ bot.on('message', async (ctx) => {
 
 bot.on('callback_query', async (ctx) => {
     const callbackQuery = ctx.callbackQuery;
-    if (onlyOwner && callbackQuery.message.chat.id !== owner) {
-        return
-    }
+    const from = callbackQuery.from;
+    const fromId = callbackQuery.from.id;
+    const isOwner = isInOwner(owner, fromId);
+
+    if (onlyOwner && !isOwner) return;
+
     let currentDate = new Date();
     let currentTimestamp = Date.now()
     const msg = callbackQuery.message;
@@ -569,9 +591,9 @@ bot.on('callback_query', async (ctx) => {
     let lang;
     let userLang;
 
-    if (msg.chat.type !== 'private') {
-        return
-    }
+
+    if (msg.chat.type !== 'private' || (await bot.telegram.getChat(fromId)).type !== 'private') return;
+
     let connection
     try {
         connection = await createConn();
@@ -765,14 +787,14 @@ bot.on('callback_query', async (ctx) => {
             });
             bot.answerCallbackQuery(callbackQuery.id, 'The language is set to English.');
         } else if (callbackQuery.data === 'admin') {
-            if (callbackQuery.from.id !== owner) {
+            if (!isOwner) {
                 return
             } else {
                 const [results] = await connection.query(
                     `SELECT lang FROM users WHERE telegramid = ?`, [chatId]
                 );
                 const lang = results[0].lang === 'RU' ? ru : results[0].lang === 'EN' ? en : results[0].lang === 'DE' ? de : null
-                bot.sendMessage(owner, userLang.adminPanel.header, {
+                bot.sendMessage(from.id, userLang.adminPanel.header, {
                     parse_mode: "Markdown",
                     chat_id: chatId,
                     message_id: msg.message_id,
@@ -1261,10 +1283,10 @@ bot.on('callback_query', async (ctx) => {
                     `${userLang.errors.fetch_timetable} ${error.message}`
                 );
 
-                bot.sendMessage(
-                    errChannel,
-                    `ERROR:\nuser:${chatId}\n${error}`
-                );
+                logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${error.message}`, {
+                    level: 'error',
+                    error: error
+                });
 
                 console.error(error);
             }

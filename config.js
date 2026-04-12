@@ -5,10 +5,11 @@
 // Dependencies
 // env config
 require("dotenv").config();
+const parseToNumberArray = require("./utils/parseToNumberArray");
 
 const config = {
     token: process.env.BOT_TOKEN, // Telegram bot token
-    owner: +process.env.OWNER, // Owner's telegram chat id(not username)
+    owner: parseToNumberArray(process.env.OWNER), // Owner's telegram chat id(not username)
     dataChannel: +process.env.DATACN, // Channel for untis logins/passwords (AES + base64)
     errChannel: +process.env.ERRCN, // Channel for errors & other logs
     cryptoPass: process.env.CRYPTO_PASS, // Pass for AES
