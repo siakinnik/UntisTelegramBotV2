@@ -5,7 +5,7 @@
 // Dependencies
 // env config
 require("dotenv").config();
-const parseToNumberArray = require("./utils/parseToNumberArray");
+const { parseToNumberArray } = require("./utils/parseToNumberArray");
 
 const config = {
     token: process.env.BOT_TOKEN, // Telegram bot token
