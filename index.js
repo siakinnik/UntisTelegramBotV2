@@ -88,7 +88,7 @@ bot.on('message', async (ctx) => {
     let userLang;
 
     if (!msg.text) {
-        return ctx.reply('Only text.')
+        return ctx.reply('Only text.', { reply_markup: { inline_keyboard: [menuButton(en)] } })
     }
     let connection
 
@@ -112,8 +112,9 @@ bot.on('message', async (ctx) => {
             if (/^\/lang( (.+))?$/.test(msg.text)) {
                 Lang(ctx)
             } else {
-                ctx.reply(`Bitte wählen Sie eine Sprache aus - /lang.\n\nПожалуйста выберите язык - /lang.\n\nPlease select a language - /lang.`);
-            }
+                // ctx.reply(`Bitte wählen Sie eine Sprache aus - /lang.\n\nПожалуйста выберите язык - /lang.\n\nPlease select a language - /lang.`);
+                Lang(ctx);
+            };
         } else {
             userLang = lang === 'RU' ? ru : lang === 'EN' ? en : lang === 'DE' ? de : null;
             const chatId = ctx.from.id;
@@ -189,7 +190,7 @@ bot.on('message', async (ctx) => {
                             userLang.untis_data.success
                                 .replace('{{username}}', username)
                                 .replace('{{pass}}', masked),
-                            { parse_mode: "MarkdownV2" }
+                            { parse_mode: "MarkdownV2", reply_markup: { inline_keyboard: [menuButton(userLang)] } }
                         ).catch((e) => {
                             logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${e.message}`, {
                                 level: 'error',
@@ -198,7 +199,7 @@ bot.on('message', async (ctx) => {
                         });
                         // await connection.close();
                     } catch (error) {
-                        await ctx.reply(`${userLang.errors.unknown_error} ${error.message}`);
+                        await ctx.reply(`${userLang.errors.unknown_error} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                         logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${error.message}`, {
                             level: 'error',
                             error: error
@@ -238,7 +239,7 @@ bot.on('message', async (ctx) => {
                         const view = results[0].view
                         const msgId = results[0].msgid
                         if (msgId === 0) {
-                            ctx.reply(`${userLang.errors.untis_credentials_required}`)
+                            ctx.reply(`${userLang.errors.untis_credentials_required}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                         } else {
                             const sentMessage = await bot.telegram.sendMessage(dataChannel, '.', { reply_to_message_id: msgId })
                             bot.telegram.deleteMessage(dataChannel, sentMessage.message_id).catch(() => { })
@@ -251,7 +252,7 @@ bot.on('message', async (ctx) => {
                         ctx.reply(`${userLang.errors.user_not_found}`);
                     }
                 } catch (error) {
-                    await ctx.reply(`⛔️${userLang.errors.fetch_timetable}. ${error.message}`);
+                    await ctx.reply(`⛔️${userLang.errors.fetch_timetable}. ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${error.message}`, {
                         level: 'error',
                         error: error
@@ -264,9 +265,9 @@ bot.on('message', async (ctx) => {
             } else if (msg.text === '/resetai') {
                 if (memory[chatId]) {
                     delete memory[chatId];
-                    await ctx.reply(userLang.ai.memoryCleared);
+                    await ctx.reply(userLang.ai.memoryCleared, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 } else {
-                    await ctx.reply(userLang.ai.memoryEmpty);
+                    await ctx.reply(userLang.ai.memoryEmpty, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 }
             } else {
                 let username, password;
@@ -276,7 +277,7 @@ bot.on('message', async (ctx) => {
                 if (results.length > 0) {
                     const msgId = results[0].msgid
                     if (msgId === 0) {
-                        ctx.reply(`${userLang.errors.untis_credentials_required}`)
+                        ctx.reply(`${userLang.errors.untis_credentials_required}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } })
                     } else {
                         const sentMessage = await bot.telegram.sendMessage(dataChannel, '.', { reply_to_message_id: msgId })
                         bot.telegram.deleteMessage(dataChannel, sentMessage.message_id).catch(() => { })
@@ -558,7 +559,7 @@ bot.on('message', async (ctx) => {
             }
         }
     } catch (error) {
-        bot.sendMessage(chatId, `⛔️${error.message}`);
+        ctx.reply(`⛔️${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
         // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
         logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
             level: 'error',
@@ -686,7 +687,7 @@ bot.on('callback_query', async (ctx) => {
                     const view = results[0].view
                     const msgId = results[0].msgid
                     if (msgId === 0) {
-                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`)
+                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     } else {
                         NewView = view === 'day' ? 'week' : 'day';
                         const sentMessage = await bot.sendMessage(dataChannel, '.', { reply_to_message_id: msgId })
@@ -701,7 +702,7 @@ bot.on('callback_query', async (ctx) => {
                     }
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -719,7 +720,7 @@ bot.on('callback_query', async (ctx) => {
                     const view = results[0].view
                     const msgId = results[0].msgid
                     if (msgId === 0) {
-                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`)
+                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     } else {
                         const sentMessage = await bot.sendMessage(dataChannel, '.', { reply_to_message_id: msgId })
                         bot.telegram.deleteMessage(dataChannel, sentMessage.message_id).catch(() => { })
@@ -730,7 +731,7 @@ bot.on('callback_query', async (ctx) => {
                     }
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable}. ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable}. ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -830,7 +831,7 @@ bot.on('callback_query', async (ctx) => {
                     const view = results[0].view
                     const msgId = results[0].msgid
                     if (msgId === 0) {
-                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`)
+                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     } else {
                         const sentMessage = await bot.sendMessage(dataChannel, '.', { reply_to_message_id: msgId })
                         bot.telegram.deleteMessage(dataChannel, sentMessage.message_id).catch(() => { })
@@ -849,7 +850,7 @@ bot.on('callback_query', async (ctx) => {
                     }
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -876,7 +877,7 @@ bot.on('callback_query', async (ctx) => {
                     const view = results[0].view
                     const msgId = results[0].msgid
                     if (msgId === 0) {
-                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`)
+                        bot.sendMessage(chatId, `${userLang.errors.untis_credentials_required}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     } else {
                         const sentMessage = await bot.sendMessage(dataChannel, '.', { reply_to_message_id: msgId })
                         bot.telegram.deleteMessage(dataChannel, sentMessage.message_id).catch(() => { })
@@ -895,7 +896,7 @@ bot.on('callback_query', async (ctx) => {
                     }
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -973,7 +974,7 @@ bot.on('callback_query', async (ctx) => {
                     });
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -1013,7 +1014,7 @@ bot.on('callback_query', async (ctx) => {
                     });
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.info} ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.info} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -1107,7 +1108,7 @@ bot.on('callback_query', async (ctx) => {
                     bot.sendMessage(chatId, message, inline);
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -1148,7 +1149,7 @@ bot.on('callback_query', async (ctx) => {
 
                     bot.answerCallbackQuery(callbackQuery.id, userLang.general.success);
                 } catch (error) {
-                    bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                    bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                     // console.error(error);
                     logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -1188,7 +1189,7 @@ bot.on('callback_query', async (ctx) => {
 
                     bot.answerCallbackQuery(callbackQuery.id, userLang.general.success);
                 } catch (error) {
-                    bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`);
+                    bot.sendMessage(chatId, `${userLang.errors.fetch_timetable} ${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                     // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                     // console.error(error);
                     logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -1234,7 +1235,7 @@ bot.on('callback_query', async (ctx) => {
                     bot.sendMessage(chatId, `${userLang.general.success}`, inline)
                 }
             } catch (error) {
-                bot.sendMessage(chatId, `⛔️${error.message}`);
+                ctx.reply(`⛔️${error.message}`, { reply_markup: { inline_keyboard: [menuButton(userLang)] } });
                 // bot.sendMessage(errChannel, `ERROR:\nuser:${chatId}\n${error}`);
                 // console.error(error);
                 logger.log(`index.js(line ${getLineNumber()}) | Unknown error: ${error.message}`, {
@@ -1272,15 +1273,15 @@ bot.on('callback_query', async (ctx) => {
 
             } catch (error) {
                 if (error.message === 'UNTIS_CREDENTIALS_REQUIRED') {
-                    return bot.sendMessage(
-                        chatId,
-                        userLang.errors.untis_credentials_required
+                    return ctx.reply(
+                        userLang.errors.untis_credentials_required,
+                        { reply_markup: { inline_keyboard: [menuButton(userLang)] } }
                     );
-                }
+                };
 
-                bot.sendMessage(
-                    chatId,
-                    `${userLang.errors.fetch_timetable} ${error.message}`
+                ctx.reply(
+                    `${userLang.errors.fetch_timetable} ${error.message}`,
+                    { reply_markup: { inline_keyboard: [menuButton(userLang)] } }
                 );
 
                 logger.log(`index.js (line ${getLineNumber()}) | Unknown Error ${error.message}`, {
@@ -1329,3 +1330,7 @@ process.on('unhandledRejection', err => {
         error: err
     });
 });
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
