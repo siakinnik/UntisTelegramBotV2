@@ -26,9 +26,9 @@ const {
     aiInstruction,
     model
 } = require('./config');
-const ru = require('./ru.json'); // Russian language package
-const en = require('./en.json'); // English language package
-const de = require('./de.json'); // German language package
+const ru = require('./locales/ru.json'); // Russian language package
+const en = require('./locales/en.json'); // English language package
+const de = require('./locales/de.json'); // German language package
 
 const ai = new GoogleGenAI({ apiKey: `${apiKey}` });
 // siakinnik - removed, replaced with utils/bot.js

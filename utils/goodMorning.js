@@ -15,9 +15,9 @@ const {
     school,
     domain
 } = require('../config');
-const ru = require('../ru.json'); // Russian language package
-const en = require('../en.json'); // English language package
-const de = require('../de.json'); // Germal language package
+const ru = require('../locales/ru.json'); // Russian language package
+const en = require('../locales/en.json'); // English language package
+const de = require('../locales/de.json'); // Germal language package
 
 // Functions && Variables
 const prevData = require("../store/prevData");
