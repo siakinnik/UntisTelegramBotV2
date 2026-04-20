@@ -2,7 +2,7 @@
 // lang.js - Lang function
 // ------------------------
 
-const en = require('../en.json'); // English language package
+const en = require('../locales/en.json'); // English language package
 const { menuButton } = require("./menuButton");
 // main function
 const Lang = async (ctx) => {
