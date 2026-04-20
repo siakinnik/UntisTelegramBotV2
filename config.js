@@ -18,6 +18,7 @@ const config = {
     domain: process.env.UNTIS_DOMAIN, // School domain on untis (see README)
     dbPath: process.env.DB_PATH || './untis.db', // Path to database
     apiKey: process.env.API_KEY, // Gemeni api key, only needed if aiEnabled : true
+    proxy: process.env.PROXY || null,
 
     onlyOwner: false, // If true - bot answers only to an admin
     aiEnabled: true, // Enables ai

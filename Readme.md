@@ -19,7 +19,7 @@ Can be turned off in config.js
 
 ## Technical Stack & Security
 
-- **Framework:** Telegraf (Telegram bot library for Node.js)
+- **Framework:** [telegraf-hardened](https://github.com/telegraf-hardened/telegraf-hardened)(Telegram bot framework for Node.js)
 - **Database:** SQLite for storing user settings and metadata
 - **Encryption:** AES encryption of Untis logins and passwords, stored as Base64 in a dedicated Telegram channel
 - **AI Integration:** Gemini AI (optional, controlled via config.js)
@@ -67,6 +67,10 @@ To install UntisBot, follow these steps:
 
    ```env
    BOT_TOKEN=TelegramBotToken # Telegram bot token
+   # --- Proxy Settings (Optional) ---
+   # Supports socks4, socks5, http, and https.
+   # Leave empty or comment out if not needed.
+   PROXY=socks5://127.0.0.1:9050
    CRYPTO_PASS=changeMeInProduction  # Pass for AES
    CRYPTO_SALT=changeMeInProduction # Salt for AES
    API_KEY=GeminiApiKey  # Gemini api key, only needed if aiEnabled = true in config.js
