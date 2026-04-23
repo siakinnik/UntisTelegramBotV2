@@ -23,7 +23,7 @@ const processUserTimetable = async ({ user, username, password }) => {
     };
 
     // const dates = [-3, -4, -5].map(offset => {
-    const dates = [1, 2, 3].map(offset => {
+    const dates = [0, 1, 2, 3].map(offset => {
         const date = new Date();
         date.setDate(date.getDate() + offset);
         return date;
