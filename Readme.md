@@ -143,4 +143,4 @@ This project is licensed under the MIT License. See the [LICENSE](./License.md) 
 
 ## Contact
 
-If you have any questions or need assistance, feel free to contact me(Nikita) at [siakin-nikita@siakinnik.com](mailto:siakin-nikita@siakinnik.com).
+If you have any questions or need assistance, feel free to contact me(Nikita) at [syakin-nikita@gmail.com](mailto:syakin-nikita@gmail.com).
