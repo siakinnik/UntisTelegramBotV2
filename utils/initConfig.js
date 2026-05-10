@@ -12,7 +12,7 @@ const initConfig = () => {
 
         const configExists = fs.existsSync(configPath);
 
-        if (configExists) {
+        if (!configExists) {
             try {
                 fs.copyFileSync(example, target);
                 console.log('\x1b[33m%s\x1b[0m', 'Config file was not found and created using example.');
