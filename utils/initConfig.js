@@ -14,7 +14,7 @@ const initConfig = () => {
 
         if (!configExists) {
             try {
-                fs.copyFileSync(example, target);
+                fs.copyFileSync(examplePath, configPath);
                 console.log('\x1b[33m%s\x1b[0m', 'Config file was not found and created using example.');
                 console.log('Please change settings in config.js and run index.js again.\nAlso don\'t forget about .env');
                 process.exit(0);
