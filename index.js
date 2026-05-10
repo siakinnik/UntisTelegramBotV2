@@ -11,6 +11,9 @@ const bot = require('./utils/bot'); // Telegram bot(Telegraf bot with some node-
 // const cron = require('node-cron'); // Timers
 const { GoogleGenAI } = require('@google/genai'); // Gemeni
 const logger = require("./utils/Logger"); // Custom Logger
+const { initConfig } = require("./utils/initConfig"); // Creates config file if not exists
+
+initConfig();
 
 // Constants
 const {
