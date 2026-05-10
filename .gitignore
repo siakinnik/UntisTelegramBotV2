@@ -5,3 +5,4 @@ test.cjs
 logs
 .env
 *.swp
+config.js
