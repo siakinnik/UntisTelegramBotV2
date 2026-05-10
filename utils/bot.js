@@ -5,8 +5,20 @@
 // Dependencies
 const { Telegraf } = require("telegraf-hardened");
 const { token, proxy } = require("../config");
+const { FetchClient } = require('@telegraf-hardened/fetch') // Install this separately
 
-const bot = new Telegraf(token, { telegram: { proxy } });
+
+const params = {};
+if (proxy) {
+  params.telegram = {
+    proxy: {
+      proxy: proxy,
+      FetchClient: FetchClient, // Injecting the client class
+    },
+  }
+}
+
+const bot = new Telegraf(token, params);
 bot.sendMessage = (...args) => bot.telegram.sendMessage(...args);
 bot.editMessageText = (...args) => bot.telegram.editMessageText(...args);
 bot.deleteMessage = (...args) => bot.telegram.deleteMessage(...args);
