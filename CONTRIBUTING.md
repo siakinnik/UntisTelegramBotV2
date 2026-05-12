@@ -22,7 +22,6 @@ If you find a bug:
 - Make inline admin-panel functional
 - Update /getallusers data for new DB format
 - Implement homework check
-- Fix memory leak in nested bot.on('message', ...)
 - Split large handlers into separate files
 - Move Gemini AI interaction into a service module
 - Optimize database queries
